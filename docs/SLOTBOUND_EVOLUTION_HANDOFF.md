@@ -27,16 +27,11 @@ Leia este documento integralmente antes de propor mudanças ou pedir informaçõ
 
 ### Primeira ação da nova sessão
 
-O usuário ainda não instalou o Godot. Portanto, retome pela instalação no Windows, usando a página oficial:
+O usuário já instalou/abriu o Godot, criou o projeto e publicou a estrutura inicial no GitHub. **Não repetir a instalação nem a criação do projeto.** Retome pela Etapa 1 do Vertical Slice: Foundation.
 
-- https://godotengine.org/download/windows/
-- Selecionar Godot 4.x Stable, Standard, Windows x86_64.
-- Não selecionar .NET/C#.
-- Extrair o ZIP para um local permanente, por exemplo `C:\Godot\`, e executar o .exe.
-- Não instalar Visual Studio, .NET SDK, Android Studio ou export templates neste momento.
-- Depois que o Project Manager abrir, orientar a criação do projeto `SlotboundEvolution`.
+Antes de editar, confira o estado atual do repositório e do projeto. Em seguida, orientar a criação gradual da estrutura mínima, dos autoloads necessários, dos dados iniciais e dos testes básicos. Não criar todos os sistemas de uma vez e não avançar para Machine Core antes de validar a Foundation.
 
-**Atenção à versão:** em conversa anterior foi sugerido Godot 4.7.2 Stable, mas a versão disponível no momento da instalação deve ser conferida na página oficial. Não assumir que esse número continua sendo o release estável mais recente.
+A versão exata do Godot não foi registrada; perguntar ou conferir no editor apenas se isso for necessário para uma decisão técnica.
 
 ---
 
@@ -948,71 +943,39 @@ O protótipo de batalha anterior possuía diferenças em relação à especifica
 
 ## 15. Próxima sessão: roteiro operacional detalhado
 
-### Passo 1 — Instalar Godot
+### Estado operacional concluído
 
-1. Abrir https://godotengine.org/download/windows/.
-2. Selecionar versão estável Godot 4.x, Standard, Windows x86_64.
-3. Não selecionar .NET.
-4. Extrair o ZIP em uma pasta permanente, como `C:\Godot\`.
-5. Executar o Godot.
-6. Confirmar que o Project Manager abriu.
+- [x] Godot instalado e Project Manager aberto.
+- [x] Repositório `HexerVoodoom/bound_evolution` clonado localmente.
+- [x] Projeto `Slotbound Evolution` criado em `bound_evolution/game/`.
+- [x] Renderer Compatibility selecionado/configurado.
+- [x] Usuário confirmou que as configurações iniciais foram realizadas.
+- [x] Commit `chore: initialize Godot project` publicado na branch `main` (hash curto `2b1b706`, conforme print).
+- [x] `game/project.godot` visível no GitHub.
 
-Não instalar ferramentas adicionais nesta etapa.
+### Próxima etapa — Foundation
 
-### Passo 2 — Criar projeto
+1. Conferir no Godot que o projeto abre sem erros.
+2. Registrar a versão exata do Godot no handoff quando disponível.
+3. Criar somente a estrutura mínima necessária para a Foundation, dentro de `game/`.
+4. Configurar os autoloads mínimos (EventBus e, se necessário, GameManager/RunManager), evitando abstrações prematuras.
+5. Criar os primeiros recursos de dados e uma cena principal mínima, conforme a implementação exigir.
+6. Definir e executar os testes básicos de infraestrutura.
+7. Fazer commit e push da Foundation validada.
 
-No Project Manager:
-1. New Project.
-2. Nome: `SlotboundEvolution`.
-3. Escolher diretório de projeto.
-4. Renderer: Compatibility.
-5. Criar e abrir.
+Não criar todos os diretórios de destino de uma vez. Expandir a estrutura conforme os módulos forem implementados.
 
-Depois configurar a resolução-base e stretch conforme as recomendações deste documento.
+### Etapa seguinte — Machine Core
 
-### Passo 3 — Criar a estrutura mínima
+Depois de a Foundation abrir e passar pelas verificações, implementar em pequenos passos:
+- `SymbolData.gd` e os nove recursos de símbolos.
+- `SeededRNG.gd` e testes de seed/distribuição.
+- `MachineCell.gd` e `MachineState.gd`.
+- `LockManager.gd`.
+- `SymbolGenerator.gd` e `MachineController.gd`.
+- Cena de máquina e UI provisória.
 
-Criar apenas:
-- `scenes/main/`
-- `scenes/machine/`
-- `scripts/core/`
-- `scripts/machine/`
-- `scripts/infrastructure/`
-- `resources/symbols/`
-- `tests/machine/`
-
-Expandir a estrutura quando cada sistema for implementado.
-
-### Passo 4 — Implementar dados e RNG
-
-Criar:
-- `SymbolData.gd`
-- Nove arquivos Resource de símbolos.
-- `SeededRNG.gd`
-- Testes para pesos e seed.
-
-Validar a distribuição antes de avançar.
-
-### Passo 5 — Implementar estado e travas
-
-Criar:
-- `MachineCell.gd`
-- `MachineState.gd`
-- `LockManager.gd`
-- Testes de preservação de símbolos e limite de travas.
-
-### Passo 6 — Implementar Controller e UI mínima
-
-Criar:
-- `SymbolGenerator.gd`
-- `MachineController.gd`
-- Cena de máquina.
-- Grade 3×3 clicável.
-- Botão Spin.
-- Indicador de travas.
-- Exibição do número do giro e seed.
-
-A interface deve ser simples e provisória. Não investir em arte final.
+Manter os testes MC-001 a MC-012 descritos na seção 12.
 
 ### Primeiro marco jogável
 
@@ -1025,8 +988,6 @@ Considerar o primeiro marco atingido quando:
 - Os testes essenciais passam.
 
 Só então avançar para o Combination Engine.
-
----
 
 ## 16. Como a próxima sessão deve responder ao usuário
 
