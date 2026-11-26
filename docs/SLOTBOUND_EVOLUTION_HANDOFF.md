@@ -17,7 +17,7 @@ Leia este documento integralmente antes de propor mudanças ou pedir informaçõ
 1. Continue do estado descrito neste documento. Não reinicie o processo de concepção.
 2. Preserve as decisões marcadas como **CONFIRMADAS**.
 3. Trate itens marcados como **PROPOSTA**, **HIPÓTESE**, **PROVISÓRIO** ou **EM ABERTO** como não definitivos.
-4. Não invente que o usuário instalou Godot, criou um projeto ou implementou scripts. Na data deste documento, nada disso foi feito.
+4. Não invente implementação que ainda não existe. O projeto Godot já foi criado em `game/` e enviado à branch `main`; Foundation, scripts, cenas e Machine Core ainda não foram implementados.
 5. O usuário quer avançar em etapas pequenas, confirmando cada etapa com mensagens como “ok, pode avançar”.
 6. Explique procedimentos técnicos de forma prática, com passos curtos e verificáveis. Não despeje todo o código de uma vez.
 7. Quando houver código, informe o caminho exato do arquivo, seu conteúdo completo e como testar no Godot.
@@ -48,24 +48,48 @@ O usuário forneceu:
 
 https://github.com/HexerVoodoom/bound_evolution
 
-Estado verificado durante a organização do repositório em 26/11/2026:
+Estado verificado em 26/11/2026, após a inicialização do projeto:
 
 - Repositório público: `HexerVoodoom/bound_evolution`.
 - Branch padrão: `main`.
 - O repositório começou vazio e recebeu primeiro o handoff na raiz.
 - A organização atual coloca este documento em `docs/SLOTBOUND_EVOLUTION_HANDOFF.md`, com um README na raiz e índice em `docs/README.md`.
-- Ainda não há projeto Godot, código-fonte ou assets do jogo.
+- O projeto Godot inicial está em `game/` e foi publicado na branch `main`.
+- A pasta `game/` contém `.editorconfig`, `.gitattributes`, `.gitignore`, `icon.svg`, `icon.svg.import` e `project.godot`.
+- Commit de inicialização confirmado pelo print do usuário: `2b1b706` (`chore: initialize Godot project`).
+- O usuário confirmou que o renderizador Compatibility e as configurações iniciais foram configurados.
+- Não há scripts, cenas de gameplay ou implementação do Machine Core confirmados.
 
-Não inferir que existe um projeto Godot nele até que os arquivos correspondentes sejam adicionados.
+Estrutura real confirmada:
+
+```text
+bound_evolution/
+├── .gitignore
+├── README.md
+├── docs/
+│   ├── README.md
+│   └── SLOTBOUND_EVOLUTION_HANDOFF.md
+└── game/
+    ├── .editorconfig
+    ├── .gitattributes
+    ├── .gitignore
+    ├── icon.svg
+    ├── icon.svg.import
+    └── project.godot
+```
+
+O diretório `.godot/` não aparece no repositório, como esperado para arquivos gerados/local-cache.
 
 ### Estado local do usuário
 
 - Sistema operacional: Windows.
-- Godot: **ainda não instalado**.
-- Projeto Godot: **ainda não criado**.
-- Scripts: **nenhum implementado**.
+- Godot: instalado e aberto pelo usuário; versão exata não registrada.
+- Projeto Godot: criado em `bound_evolution/game/` e publicado na branch `main`.
+- Renderizador: Compatibility, confirmado pelo usuário.
+- Configurações iniciais: usuário informou que tudo foi configurado; a resolução-base 1280×720 e stretch foram orientados anteriormente, mas não foram verificados individualmente por captura de tela.
+- Scripts e cenas de gameplay: nenhum implementado/confirmado.
+- Foundation: ainda não implementada.
 - Machine Core: especificado conceitualmente, mas ainda não implementado.
-- O usuário está pronto para começar pela instalação do Godot.
 
 ### Ferramenta e stack escolhidas
 
@@ -509,8 +533,14 @@ A UI observa eventos e apresenta resultados. Ela não decide regras de combate.
 ### Estrutura de pastas de destino
 
 ```text
-SlotboundEvolution/
-├── project.godot
+bound_evolution/
+├── README.md
+├── .gitignore
+├── docs/
+│   ├── README.md
+│   └── SLOTBOUND_EVOLUTION_HANDOFF.md
+└── game/
+    ├── project.godot
 ├── assets/
 │   ├── fonts/
 │   ├── icons/
@@ -539,8 +569,8 @@ SlotboundEvolution/
 │   ├── components/
 │   ├── screens/
 │   └── themes/
-└── tests/
-    ├── machine/
+    └── tests/
+        ├── machine/
     ├── combinations/
     ├── combat/
     └── run/
@@ -1000,17 +1030,17 @@ Só então avançar para o Combination Engine.
 
 ## 16. Como a próxima sessão deve responder ao usuário
 
-O usuário está no começo da instalação. Não responder com uma longa aula de arquitetura antes de resolver isso.
+O usuário já concluiu a instalação e inicialização do projeto. Não repetir instruções de download, clone ou criação do projeto.
 
-A resposta inicial recomendada é:
+A próxima sessão deve:
+1. Reconhecer que `game/project.godot` já está publicado.
+2. Começar pela Foundation, uma etapa pequena por vez.
+3. Dar instruções concretas com caminhos relativos a `game/`.
+4. Pedir confirmação/print quando uma configuração ou resultado visual precisar ser verificado.
+5. Não declarar uma etapa concluída até que o usuário confirme ou o repositório/editor permita verificar.
+6. Após cada marco, orientar commit e push e atualizar este handoff com o estado real.
 
-1. Confirmar que vamos começar pela instalação.
-2. Dar o link oficial do Godot para Windows.
-3. Explicar que é a versão Standard, sem .NET.
-4. Pedir que baixe, extraia e abra.
-5. Aguardar confirmação antes de criar o projeto.
-
-Quando o usuário disser que abriu o Project Manager, continuar com a criação do projeto. Não perguntar novamente informações que já estão registradas aqui.
+Não perguntar novamente informações que já estão registradas aqui.
 
 ---
 
@@ -1031,4 +1061,4 @@ Foram realizadas simulações exploratórias de combos, estratégias de trava e 
 
 A arquitetura deve separar UI, fluxo de jogo, sistemas de gameplay, dados e infraestrutura. O primeiro módulo será Machine Core: dados dos símbolos, RNG com seed, grade, travas, sorteio ponderado, histórico, UI mínima e testes. Depois virão Combination Engine, Combat Core, Run Controller e UI do Vertical Slice.
 
-**Estado real neste momento: o Godot ainda não foi instalado, o projeto ainda não foi criado e não há código implementado no repositório. A próxima sessão deve começar pela instalação do Godot no Windows e seguir passo a passo.**
+**Estado real em 26/11/2026: o projeto Godot inicial existe em `game/` e foi publicado na branch `main` (commit inicial `2b1b706`). O usuário confirmou o renderizador Compatibility e as configurações iniciais. Ainda não há implementação de gameplay confirmada. A próxima sessão deve começar pela Foundation, em etapas pequenas, e só depois avançar para o Machine Core.**
